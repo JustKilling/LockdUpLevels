@@ -1,0 +1,6 @@
+name: LockdUpLevels
+version: '${project.version}'
+main: me.emiel.lockduplevels.LockdUpLevels
+api-version: 1.19
+authors: [ Emiel ]
+description: Leveling plugin
