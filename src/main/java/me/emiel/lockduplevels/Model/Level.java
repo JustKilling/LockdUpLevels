@@ -36,32 +36,45 @@ public class Level {
     }
 
     public void addXp(int xp){
+//        currentXp += xp;
+//        int predicted = calculatePredictedLevel(currentXp);
+//
+////        Bukkit.broadcastMessage("predicted: " + predicted);
+////        Bukkit.broadcastMessage("level:" + level);
+////        Bukkit.broadcastMessage("CurrentXp:" + currentXp);
+////        Bukkit.broadcastMessage("Needed for next level:" + (calculateTotalExpNeeded(level+1)- currentXp) );
+//
+//        if(predicted > level){
+//            int rest = currentXp - calculateTotalExpNeeded(predicted);
+//            level = predicted;
+//            currentXp = rest;
+//
+//        }
         currentXp += xp;
-        int predicted = calculatePredictedLevel(currentXp);
+        int xpToLevelUp = calculateTotalExpNeeded(level + 1);
+        int oldLevel = level;
+        boolean isElse = true;
+        while(currentXp >= xpToLevelUp){
+            isElse = false;
 
-//        Bukkit.broadcastMessage("predicted: " + predicted);
-//        Bukkit.broadcastMessage("level:" + level);
-//        Bukkit.broadcastMessage("CurrentXp:" + currentXp);
-//        Bukkit.broadcastMessage("Needed for next level:" + (calculateTotalExpNeeded(level+1)- currentXp) );
-
-        if(predicted > level){
-            int rest = currentXp - calculateTotalExpNeeded(predicted);
-            level = predicted;
-            currentXp = rest;
+            level++;
+            currentXp -= xpToLevelUp;
 
         }
+        if(isElse){
 
+        }
     }
 
 
     public void addXp(int xp, SkillType type, Player player) {
         currentXp += xp;
         int xpToLevelUp = calculateTotalExpNeeded(level + 1);
-
+        int oldLevel = level;
         boolean isElse = true;
         while(currentXp > xpToLevelUp){
                 isElse = false;
-                int oldLevel = level;
+
                 level++;
                 currentXp -= xpToLevelUp;
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 20,1);
