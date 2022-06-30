@@ -1,0 +1,4 @@
+prefix: "LockdUpLevels | "
+#how higher the slower people will rank up.
+multiplier-per-level: 1.20
+xp-per-level: 100

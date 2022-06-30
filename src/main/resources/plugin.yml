@@ -4,3 +4,7 @@ main: me.emiel.lockduplevels.LockdUpLevels
 api-version: 1.19
 authors: [ Emiel ]
 description: Leveling plugin
+commands:
+  levels:
+    description: Base command for the plugin
+    usage: /<command>

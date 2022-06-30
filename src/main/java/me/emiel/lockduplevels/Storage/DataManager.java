@@ -1,6 +1,5 @@
 package me.emiel.lockduplevels.Storage;
 
-import com.bergerkiller.bukkit.common.map.util.MapUUID;
 import lombok.RequiredArgsConstructor;
 import me.emiel.lockduplevels.Model.PlayerData;
 
@@ -211,8 +210,19 @@ public class DataManager {
     }
 
     public PlayerData getPlayerData(UUID playerId) {
-        return playerDataMap.get(playerId);
+        if(playerDataMap.containsKey(playerId)){
+            return playerDataMap.get(playerId);
+        }
+        loadPlayerData(playerId);
+        if(playerDataMap.containsKey(playerId)){
+            return playerDataMap.get(playerId);
+        }
+        return null;
     }
-
+    public void resetPlayerData(UUID playerId) {
+        PlayerData pd = getPlayerData(playerId);
+        pd.resetAll();
+        playerDataMap.replace(playerId, pd);
+    }
 
 }

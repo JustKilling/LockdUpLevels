@@ -1,10 +1,13 @@
 package me.emiel.lockduplevels.Storage;
 
-import com.bergerkiller.bukkit.common.PluginBase;
-import com.bergerkiller.bukkit.common.dep.gson.Gson;
-import com.bergerkiller.bukkit.common.dep.gson.GsonBuilder;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
 import me.emiel.lockduplevels.Model.PlayerData;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class PlayerJsonPersistenceHandler implements PlayerPersistenceHandler {
     private final Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-    private final PluginBase plugin;
+    private final JavaPlugin plugin;
 
     private File getPlayerDataFile(UUID playerId) {
         File folder = plugin.getDataFolder();
@@ -29,14 +32,19 @@ public class PlayerJsonPersistenceHandler implements PlayerPersistenceHandler {
     @Override
     public CompletableFuture<PlayerData> loadDataAsync(UUID playerId) {
         File playerFile = getPlayerDataFile(playerId);
+        Bukkit.getServer().broadcastMessage("loading before cf!");
+
         return CompletableFuture.supplyAsync(() -> {
             if (!playerFile.exists()) {
                 return new PlayerData();
             }
             try {
                 String json = Files.readString(playerFile.toPath());
-                return gson.fromJson(json, PlayerData.class);
+                PlayerData data =gson.fromJson(json, PlayerData.class);
+                return data == null ? new PlayerData()  : data;
             } catch (IOException e) {
+                Bukkit.getServer().broadcastMessage(e.getMessage());
+
                 e.printStackTrace();
                 return new PlayerData();
             }

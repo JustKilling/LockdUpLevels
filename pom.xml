@@ -73,16 +73,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.bergerkiller.bukkit</groupId>
-            <artifactId>BKCommonLib</artifactId>
-            <version>1.19-v2-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>C:/API/BKCommonLib-1.19-v1-1334.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>RELEASE</version>
+            <version>1.18.24</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
